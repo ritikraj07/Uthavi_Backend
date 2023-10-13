@@ -3,14 +3,14 @@ const Group = require("../Model/Group.Model")
 const Member = require("../Model/Member.Model")
 
 
-async function Create_Group({name, admin_id, duration, intrest_rate}) {
+async function Create_Group({ name, admin_id, duration, intrest_rate, amount }) {
+    console.log({ name, admin_id, duration, intrest_rate, amount })
     try { 
-        const group = await Group.create({ name, admin_id, duration, intrest_rate })
+        const group = await Group.create({ name, admin_id, duration, intrest_rate, amount })
 
         let admin = await Admin.findById(admin_id)
       
       
-
         admin.group_id.push(group._id);
         admin.groups.push({group_id: group._id, name: name})
         await admin.save();

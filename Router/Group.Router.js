@@ -9,8 +9,8 @@ const GroupRouter = Router()
 
 GroupRouter.post('/create', async (req, res) => {
     try {
-        let { admin_id, duration, intrest_rate, name } = req.body
-        let group = await Create_Group({ admin_id, duration, intrest_rate, name })
+        let { admin_id, duration, intrest_rate, name, amount } = req.body
+        let group = await Create_Group({ admin_id, duration, intrest_rate, name, amount })
         res.status(200).send({
             data: group
         })
