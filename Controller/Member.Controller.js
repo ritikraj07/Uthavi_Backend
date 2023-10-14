@@ -25,6 +25,7 @@ async function getMember(id) {
         if (!member) {
             throw new Error("no member with this id")
         }
+        return member
     } catch (error) {
         console.log("error from getMember function", error)
     }
@@ -41,15 +42,26 @@ async function updateMember({ name, phone_no, history, _id }) {
     }
 }
 
-async function changeStatus({month, _id, newStatus}) {
-    let member = await Member.findById(_id)
-    if (!member) {
-        throw new Error("No member found")
+
+
+async function changeStatus({ month, _id, newStatus }) {
+    try {
+        const updatedMember = await Member.findByIdAndUpdate(
+            _id,
+            { $set: { [`history.${month}`]: newStatus } },
+            { new: true }
+        );
+
+        if (!updatedMember) {
+            throw new Error("No member found with the provided ID");
+        }
+
+        return updatedMember;
+    } catch (error) {
+        console.error("Error from change status:", error);
+        throw error; // Rethrow the error to handle it outside the function
     }
-    member.history[month] = newStatus
-    await member.save()
-    return member
 }
 
 
-module.exports = {createMember, updateMember, changeStatus}
+module.exports = {createMember, updateMember, changeStatus, getMember}

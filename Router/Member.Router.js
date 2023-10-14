@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createMember, changeStatus } = require('../Controller/Member.Controller')
+const { createMember, changeStatus, getMember } = require('../Controller/Member.Controller')
 
 
 const MemberRouter = Router()
@@ -20,6 +20,21 @@ MemberRouter.post('/update', async (req, res) => {
     try {
         let { month, _id, newStatus } = req.body
         let member = await changeStatus({ month, _id, newStatus })
+        res.send({
+            data: member
+        })
+    } catch (error) {
+        res.send("error from member router", error)
+    }
+})
+
+
+
+MemberRouter.get('/:id', async (req, res) => {
+    try {
+        
+        let id = req.params.id
+        let member = await getMember(id)
         res.send({
             data: member
         })
