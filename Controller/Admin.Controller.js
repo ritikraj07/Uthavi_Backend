@@ -32,7 +32,7 @@ async function login_admin({ email, password }) {
         if (password == admin.password) {
             
             if (admin.group_id.length > 0) {
-                let members = get_group_members(admin.group_id[0])
+                let members = await get_group_members(admin.group_id[0])
                 return {admin, members: members}
             }
             return admin
