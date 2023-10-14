@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createMember, updateMember } = require('../Controller/Member.Controller')
+const { createMember, changeStatus } = require('../Controller/Member.Controller')
 
 
 const MemberRouter = Router()
@@ -16,10 +16,10 @@ MemberRouter.post('/create', async (req, res) => {
     }
 })
 
-MemberRouter.patch('/update', async (req, res) => {
+MemberRouter.post('/update', async (req, res) => {
     try {
-        let { _id, name, phone_no, history } = req.body
-        let member = await updateMember({ _id, name, phone_no, history })
+        let { month, _id, newStatus } = req.body
+        let member = await changeStatus({ month, _id, newStatus })
         res.send({
             data: member
         })

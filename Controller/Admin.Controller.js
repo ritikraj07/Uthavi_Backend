@@ -13,6 +13,7 @@ async function Register_Admin({email, password, name}) {
     catch (error) {
         console.log("error from Refister Admin function controller")
         console.log(error)
+        return error
     }
 }
 
