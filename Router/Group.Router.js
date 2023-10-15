@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { Create_Group, get_group_members } = require('../Controller/Group.Controller')
+const { Create_Group, get_group_members, Add_id_to_winnerList } = require('../Controller/Group.Controller')
 
 
 const GroupRouter = Router()
@@ -21,6 +21,21 @@ GroupRouter.post('/create', async (req, res) => {
     }
 })
 
+GroupRouter.post('/addwinner', async (req, res) => {
+    try { 
+        let { group_id, winner_id } = req.body
+        let group = await Add_id_to_winnerList(winner_id, group_id)
+        res.send({
+            data: group
+        })
+    } catch (error) {
+        res.status(400).send({
+            data: 'error from group add winner router',
+            error: error
+        })
+    }
+})
+
 
 /****************************************************** Get REQUEST *************************************************/
 
@@ -38,6 +53,8 @@ GroupRouter.get('/:id', async (req, res) => {
         })
     }
 })
+
+
 
 
 

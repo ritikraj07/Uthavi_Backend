@@ -32,4 +32,23 @@ async function get_group_members(group_id) {
     }
 }
 
-module.exports = {Create_Group, get_group_members}
+async function Add_id_to_winnerList(winner_id, id) {
+    try {
+        // Add winner id to the winner list
+        const group = await Group.findByIdAndUpdate(id, {
+            $push: { winner_list: winner_id }
+        }, { new: true });
+
+        if (!group) {
+            throw new Error("No group found with the provided ID");
+        }
+
+        return group;
+    } catch (error) {
+        console.log("error from Add id to winner list ", error);
+        throw error;
+    }
+}
+
+
+module.exports = {Create_Group, get_group_members, Add_id_to_winnerList}
